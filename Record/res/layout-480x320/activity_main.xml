@@ -1,0 +1,102 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/operation_layout2"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/tables_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/tables_detail_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:listSelector="@drawable/media_list_selector" >
+                </ListView>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/operation_layout2"
+        android:layout_above="@+id/operation_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:divider="@drawable/ic_divider"
+        android:orientation="horizontal"
+        android:weightSum="3" >
+
+        <Button
+            android:id="@+id/add_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"   android:background="@drawable/btn_selector"
+            android:text="@string/add" />
+
+        <Button
+            android:id="@+id/modify_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"   android:background="@drawable/btn_selector"
+            android:text="@string/modify" />
+
+        <Button
+            android:id="@+id/delete_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"   android:background="@drawable/btn_selector"
+            android:text="@string/delete"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/operation_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:divider="@drawable/ic_divider"
+        android:orientation="horizontal"
+        android:weightSum="3" >
+
+        <Button
+            android:id="@+id/export_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"   android:background="@drawable/btn_selector"
+            android:text="@string/export" />
+
+        <Button
+            android:id="@+id/clear_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+               android:background="@drawable/btn_selector"
+            android:text="@string/clear" />
+                    <Button
+            android:id="@+id/back_btn"
+           android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+               android:background="@drawable/btn_selector"
+            android:text="@string/back"/>
+    </LinearLayout>
+
+</RelativeLayout>

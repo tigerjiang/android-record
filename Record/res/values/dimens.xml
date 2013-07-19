@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="content_item_height">100dp</dimen>
+    <dimen name="content_item_width">250dp</dimen>
+     <dimen name="text_size1">20sp</dimen>
+     <dimen name="text_size2">22sp</dimen>
+      <dimen name="table_size">100dp</dimen>
+      <dimen name="table_item_height">150dp</dimen>
+     <dimen name="table_item_width">150dp</dimen>
+</resources>
