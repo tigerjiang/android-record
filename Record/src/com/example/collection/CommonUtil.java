@@ -126,6 +126,7 @@ public class CommonUtil {
         imeiShow.setText(getIMEI());
         final AlertDialog verifyDialog = new AlertDialog.Builder(context)
                 .setView(rootView).create();
+        
         confirmBtn.setOnClickListener(new Button.OnClickListener() {
 
             @Override

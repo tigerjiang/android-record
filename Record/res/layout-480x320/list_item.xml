@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:weightSum="5.0"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <EditText
+        android:id="@+id/column_txt"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/content_item_height"
+        android:layout_weight="4.0"
+        android:singleLine="true" 
+       />
+
+    <ImageButton
+        android:id="@+id/delete_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/content_item_height"
+        android:layout_weight="1.0"
+        android:src="@drawable/remove" 
+        />
+
+</LinearLayout>

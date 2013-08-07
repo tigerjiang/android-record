@@ -8,6 +8,7 @@
     <string name="username_alert">用户名:</string>
     <string name="password_alert">密码:</string>
     <string name="modify_password">修改密码?</string>
+    <string name="forget_password">忘记密码?</string>
     <string name="login">登录</string>
     <string name="old_pwd">原密码:</string>
     <string name="modify_password_title">密码修改</string>

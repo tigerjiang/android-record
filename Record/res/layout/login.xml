@@ -75,4 +75,15 @@
             android:text="@string/login" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/forget_pwd_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:linksClickable="true"
+        android:text="@string/forget_password"
+        android:textSize="15sp" />
+
 </LinearLayout>
