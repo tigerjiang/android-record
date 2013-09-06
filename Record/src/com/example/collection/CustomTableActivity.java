@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -143,5 +144,14 @@ public class CustomTableActivity extends Activity implements OnClickListener {
         } else {
             CustomListView.clearFocus();
         }
+    }
+    
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+       if(keyCode == KeyEvent.KEYCODE_BACK){
+           setResult(RESULT_OK);
+           finish();
+       }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -45,7 +45,7 @@
             android:id="@+id/new_pwd_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPassword|numberPassword" />
+             android:inputType="textPassword|number" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,7 +64,7 @@
                 android:id="@+id/confirm_pwd_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPassword|numberPassword" />
+                 android:inputType="textPassword|number" />
         </LinearLayout>
          <RelativeLayout
              android:layout_margin="20dp"

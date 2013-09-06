@@ -39,9 +39,9 @@
 
     <LinearLayout
         android:id="@+id/operation_layout2"
-        android:layout_above="@+id/operation_layout1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_above="@+id/operation_layout1"
         android:divider="@drawable/ic_divider"
         android:orientation="horizontal"
         android:weightSum="3" >
@@ -50,23 +50,27 @@
             android:id="@+id/add_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"   android:background="@drawable/btn_selector"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
             android:text="@string/add" />
 
         <Button
             android:id="@+id/modify_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"   android:background="@drawable/btn_selector"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
             android:text="@string/modify" />
 
         <Button
             android:id="@+id/delete_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"   android:background="@drawable/btn_selector"
-            android:text="@string/delete"/>
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:text="@string/delete" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/operation_layout1"
         android:layout_width="match_parent"
@@ -80,7 +84,8 @@
             android:id="@+id/export_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"   android:background="@drawable/btn_selector"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
             android:text="@string/export" />
 
         <Button
@@ -88,15 +93,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-               android:background="@drawable/btn_selector"
+            android:background="@drawable/btn_selector"
             android:text="@string/clear" />
-                    <Button
+
+        <Button
             android:id="@+id/back_btn"
-           android:layout_width="0dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-               android:background="@drawable/btn_selector"
-            android:text="@string/back"/>
+            android:background="@drawable/btn_selector"
+            android:text="@string/back" />
     </LinearLayout>
 
 </RelativeLayout>

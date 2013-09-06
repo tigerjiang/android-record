@@ -92,9 +92,4 @@ public class CollectionProvider extends ContentProvider {
         }
     }
 
-    @Override
-    public void shutdown() {
-        super.shutdown();
-        mDbService.close();
-    }
 }

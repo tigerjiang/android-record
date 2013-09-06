@@ -57,7 +57,6 @@ public class TablesActivity extends Activity {
                     public void onItemClick(AdapterView<?> arg0, View arg1,
                             int arg2, long arg3) {
                         if (arg2 == 0) {
-                            queryAll();
                             android.content.DialogInterface.OnClickListener listener = new OnClickListener() {
 
                                 @Override
@@ -65,6 +64,8 @@ public class TablesActivity extends Activity {
                                         int which) {
                                     CommonUtil.showDialog(mContext, "导出数据",
                                             "导出成功!");
+                                    //首先删除所有导出的文件
+                                    FileTools.deleteAllFile();
                                     queryAll();
 
                                 }
@@ -255,8 +256,9 @@ public class TablesActivity extends Activity {
         if (cursor != null && cursor.moveToFirst() && cursor.getCount() > 0) {
             StringBuffer content = new StringBuffer();
             for (int columnIndex = 1; columnIndex < column.length; columnIndex++) {
-                content.append(column[columnIndex]).append("|");
+                content.append(column[columnIndex]).append("\t");
             }
+            content.deleteCharAt(content.lastIndexOf("\t"));
             content.append("\n");
             for (int rowCount = 0; rowCount < cursor.getCount(); rowCount++) {
                 cursor.moveToPosition(rowCount);
@@ -266,6 +268,7 @@ public class TablesActivity extends Activity {
                                     .getColumnIndex(projection[i])))
                             .append("\t");
                 }
+                content.deleteCharAt(content.lastIndexOf("\t"));
                 content.append("\n");
                 Log.d("rowResult", content.toString());
             }

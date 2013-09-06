@@ -85,6 +85,15 @@ public class FileTools {
         out.close();
     }
 
+    public static void deleteAllFile(){
+        File dir = new File(CommonUtil.getCollectionDIrPath());
+        if (dir.exists()) {
+            for(File file :dir.listFiles()){
+                file.delete();
+            }
+            dir.delete();
+        }
+    }
     public static void writeFile2(String fileContent, String filePathAndName) {
         try {
             File dir = new File(CommonUtil.getCollectionDIrPath());

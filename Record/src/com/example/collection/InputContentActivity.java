@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.collection.data.CollectionProvider;
+import com.example.collection.util.IdcardUtil;
 
 public class InputContentActivity extends Activity implements
         android.view.View.OnClickListener {
@@ -209,15 +210,15 @@ public class InputContentActivity extends Activity implements
                       @Override
                       public void afterTextChanged(Editable s) {
                         
-                          if(!TextUtils.isEmpty(s.toString())){
-                              Matcher matcher =  mIdPattern.matcher(s.toString());
-                              if(!matcher.matches()){
-                                  mErrorMessage = "输入身份证号码不正确,请重新输入";
-                              }else{
-                                  mErrorMessage=null;
-                              }
-                               }
-                      }
+                        if (!TextUtils.isEmpty(s.toString())) {
+                            if (!IdcardUtil.isIdcard(s.toString())) {
+                                mErrorMessage = "输入身份证号码不正确,请重新输入";
+                            }
+
+                        } else {
+                            mErrorMessage = null;
+                        }
+                    }
                   });
                   if (type != null) {
 
@@ -252,14 +253,16 @@ public class InputContentActivity extends Activity implements
                         @Override
                         public void afterTextChanged(Editable s) {
                           
-                            if(!TextUtils.isEmpty(s.toString())){
-                                Matcher matcher =  mIdPattern.matcher(s.toString());
-                                if(!matcher.matches()){
-                                    mErrorMessage = "输入手机号码不正确,请重新输入";
-                                }else{
-                                    mErrorMessage=null;
-                                }
-                                 }
+                        if (!TextUtils.isEmpty(s.toString())) {
+                            Matcher matcher = mIdPattern.matcher(s.toString());
+                            if (!matcher.matches()) {
+                                mErrorMessage = "输入手机号码不正确,请重新输入";
+                            } else {
+                                mErrorMessage = null;
+                            }
+                        }else{
+                            mErrorMessage=null;
+                        }
                         }
                     });
                     
@@ -379,7 +382,7 @@ public class InputContentActivity extends Activity implements
             message = "信息为空，保存失败";
             Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
             return;
-        } else if(mErrorMessage!=null){
+        } else if(!TextUtils.isEmpty(mErrorMessage)){
             message = mErrorMessage;
             Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
             return;

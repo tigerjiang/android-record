@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import com.example.collection.CommonUtil;
 import com.example.collection.FileTools;
+import com.example.collection.util.IdcardUtil;
 import com.example.collection.util.MD5Util;
+import com.example.collection.util.Validator;
 
 import android.os.Environment;
 import android.test.AndroidTestCase;
@@ -111,5 +113,15 @@ public class Test extends AndroidTestCase {
         String md5 = MD5Util.md5(data);
         Log.d("md5", "md5  =" + md5);
     }
+    
+    public void deleteFile(){
+        FileTools.deleteAllFile();
+    }
 
+    public void testIDnumber(){
+        String id = "53038119860725431x";
+        boolean isLegality = IdcardUtil.isIdcard(id);
+        System.err.println(isLegality?id+ " is a legality":id+" is not a legality");
+        
+    }
 }

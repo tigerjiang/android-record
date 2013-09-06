@@ -44,7 +44,7 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPassword|numberPassword"
+             android:inputType="textPassword|number"
             android:password="true" />
     </LinearLayout>
 

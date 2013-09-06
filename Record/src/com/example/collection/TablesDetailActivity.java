@@ -277,8 +277,9 @@ public class TablesDetailActivity extends Activity implements OnClickListener,
         if (cursor != null && cursor.moveToFirst() && cursor.getCount() > 0) {
             StringBuffer content = new StringBuffer();
             for (int columnIndex = 1; columnIndex < mTitleList.length; columnIndex++) {
-                content.append(mTitleList[columnIndex]).append("|");
+                content.append(mTitleList[columnIndex]).append("\t");
             }
+            content.deleteCharAt(content.lastIndexOf("\t"));
             content.append("\n");
             for (int rowCount = 0; rowCount < cursor.getCount(); rowCount++) {
                 cursor.moveToPosition(rowCount);
@@ -288,6 +289,7 @@ public class TablesDetailActivity extends Activity implements OnClickListener,
                                     .getColumnIndex(projection[i])))
                             .append("\t");
                 }
+                content.deleteCharAt(content.lastIndexOf("\t"));
                 content.append("\n");
                 Log.d("rowResult", content.toString());
             }
