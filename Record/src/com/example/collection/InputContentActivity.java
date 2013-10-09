@@ -61,7 +61,7 @@ public class InputContentActivity extends Activity implements
 
     private String mId;
 
-    private Button mDateView, mTimeView;
+//    private Button mDateView, mTimeView;
     private RadioButton mManBtn,mWomenBtn,mNoneBtn;
     
     private EditText tempEditItem;
@@ -132,8 +132,8 @@ public class InputContentActivity extends Activity implements
                 LinearLayout dataLayout = new LinearLayout(mContext);
                 dataLayout.setOrientation(LinearLayout.HORIZONTAL);
                 dataLayout.setWeightSum(2.0f);
-                mDateView = new Button(mContext);
-                mTimeView = new Button(mContext);
+            final  Button   mDateView = new Button(mContext);
+             final Button  mTimeView = new Button(mContext);
                 // mDateView.setTextColor(Color.DKGRAY);
                 mDateView.setTextSize(16);
                 mTimeView.setTextSize(16);
@@ -146,36 +146,63 @@ public class InputContentActivity extends Activity implements
                 mTimeView.setLayoutParams(new LinearLayout.LayoutParams(
                         LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT,
                         1.0f));
+               
+                
+              final   DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                            int dayOfMonth) {
+                        mYear = year;
+                        mMonth = monthOfYear;
+                        mDay = dayOfMonth;
+                        updateDateDisplay(mDateView);
+                    }
+                };
+                final DatePickerDialog datePickerDialog =  new DatePickerDialog(InputContentActivity.this, dateSetListener, mYear,
+                        mMonth, mDay);
                 mDateView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        showDialog(DATE_DIALOG_ID);
+                        datePickerDialog.show();
 
                     }
                 });
+
+              final  TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mHour = hourOfDay;
+                        mMinute = minute;
+                        updateTimeDisplay(mTimeView);
+                    }
+                };
+                final  TimePickerDialog tiemPickDialogh =  new TimePickerDialog(InputContentActivity.this, timeSetListener, mHour, mMinute, false); 
                 mTimeView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        showDialog(TIME_DIALOG_ID);
+                        tiemPickDialogh.show();
 
                     }
                 });
 
+             
                 dataLayout.addView(mDateView);
                 dataLayout.addView(mTimeView);
                 if (type != null) {
 
                     if (type.equals("add")) {
-                        updateDisplay();
+                        updateDateDisplay(mDateView);
+                        updateTimeDisplay(mTimeView);
                     } else {
                         try{
                         String[] dateStr = mColumnValue[i].split(" ");
                         mDateView.setText(dateStr[0]);
                         mTimeView.setText(dateStr[1]);
                         }catch(Exception e){
-                            updateDisplay();
+                            updateDateDisplay(mDateView);
+                            updateTimeDisplay(mTimeView);
                         }
                     }
                 }
@@ -487,11 +514,11 @@ public class InputContentActivity extends Activity implements
             String item = "";
 
             if (mValueLayout.getChildAt(childIndex) instanceof LinearLayout) {
-                if (mColumnTitle[childIndex + 1].equals("日期")
-                        || mColumnTitle[childIndex + 1].equals("时间")) {
-                    item = mDateView.getText().toString() + " "
-                            + mTimeView.getText().toString();
-                } else if (mColumnTitle[childIndex + 1].equals("性别")) {
+                if (mColumnTitle[childIndex + 1].contains("日期")
+                        || mColumnTitle[childIndex + 1].contains("时间")) {
+                    item = ((Button)((LinearLayout)mValueLayout.getChildAt(childIndex)).getChildAt(0)).getText().toString() + " "
+                            + ((Button)((LinearLayout)mValueLayout.getChildAt(childIndex)).getChildAt(1)).getText().toString();
+                } else if (mColumnTitle[childIndex + 1].contains("性别")) {
                     item =  mSexStr;
                 }
             } else {
@@ -581,61 +608,20 @@ public class InputContentActivity extends Activity implements
                         .append(":").append(pad(mSecond)).toString());
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case TIME_DIALOG_ID:
-                return new TimePickerDialog(this, mTimeSetListener, mHour,
-                        mMinute, false);
-            case DATE_DIALOG_ID:
-                return new DatePickerDialog(this, mDateSetListener, mYear,
-                        mMonth, mDay);
-        }
-        return null;
-    }
 
-    @Override
-    protected void onPrepareDialog(int id, Dialog dialog) {
-        switch (id) {
-            case TIME_DIALOG_ID:
-                ((TimePickerDialog) dialog).updateTime(mHour, mMinute);
-                break;
-            case DATE_DIALOG_ID:
-                ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
-                break;
-        }
-    }
-
-    private void updateDisplay() {
-        mDateView.setText(new StringBuilder()
-                // Month is 0 based so add 1
-
-                .append(mYear).append("-").append(mMonth + 1).append("-")
-                .append(mDay));
-        mTimeView.setText(new StringBuilder().append(pad(mHour)).append(":")
+    private void updateTimeDisplay(Button timeView) {
+        timeView.setText(new StringBuilder().append(pad(mHour)).append(":")
                 .append(pad(mMinute)).append(":").append(pad(mSecond)));
     }
 
-    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                int dayOfMonth) {
-            mYear = year;
-            mMonth = monthOfYear;
-            mDay = dayOfMonth;
-            updateDisplay();
-        }
-    };
-
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            mHour = hourOfDay;
-            mMinute = minute;
-            updateDisplay();
-        }
-    };
-
+    private void updateDateDisplay(Button dataView) {
+        dataView.setText(new StringBuilder()
+                // Month is 0 based so add 1
+                .append(mYear).append("-").append(mMonth + 1).append("-")
+                .append(mDay));
+    }
+    
     private static String pad(int c) {
         if (c >= 10)
             return String.valueOf(c);
