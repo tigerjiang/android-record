@@ -14,7 +14,7 @@
     </instrumentation>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -34,12 +34,15 @@
         </activity>
         <activity android:name="com.example.collection.TablesActivity" >
         </activity>
-        <activity android:name="com.example.collection.InputContentActivity"
+        <activity
+            android:name="com.example.collection.InputContentActivity"
             android:windowSoftInputMode="stateUnchanged" />
         <activity android:name="com.example.collection.EditActivity" />
         <activity android:name="com.example.collection.ModifyPasswordActivity" />
- <activity android:name="com.example.collection.CustomTableActivity"
-     android:windowSoftInputMode="adjustPan"  />
+        <activity
+            android:name="com.example.collection.CustomTableActivity"
+            android:windowSoftInputMode="adjustPan" />
+
         <provider
             android:name="com.example.collection.data.CollectionProvider"
             android:authorities="com.example.providers.collection" />

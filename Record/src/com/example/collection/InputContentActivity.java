@@ -28,6 +28,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
@@ -59,6 +62,8 @@ public class InputContentActivity extends Activity implements
     private String mId;
 
     private Button mDateView, mTimeView;
+    private RadioButton mManBtn,mWomenBtn,mNoneBtn;
+    
     private EditText tempEditItem;
     private boolean isEditFull;
      //正则表达式表示15位或者18位数字的一串数字
@@ -77,6 +82,7 @@ public class InputContentActivity extends Activity implements
     private String tempStr = "";
     private int mDimenSize ;
     private String mErrorMessage;
+    private String mSexStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,14 +170,124 @@ public class InputContentActivity extends Activity implements
                     if (type.equals("add")) {
                         updateDisplay();
                     } else {
+                        try{
                         String[] dateStr = mColumnValue[i].split(" ");
                         mDateView.setText(dateStr[0]);
                         mTimeView.setText(dateStr[1]);
+                        }catch(Exception e){
+                            updateDisplay();
+                        }
                     }
                 }
                 mValueLayout
                         .addView(dataLayout, LayoutParams.MATCH_PARENT, mDimenSize);
-            }else if (mColumnTitle[mChildIndex].contains("填表人")
+            }else if (mColumnTitle[mChildIndex].contains("性别")) {
+                LinearLayout dataLayout = new LinearLayout(mContext);
+                dataLayout.setOrientation(LinearLayout.HORIZONTAL);
+                dataLayout.setWeightSum(3.0f);
+                RadioGroup radioGroup = new RadioGroup(mContext);
+                radioGroup.setOrientation(LinearLayout.HORIZONTAL);
+                radioGroup.setWeightSum(3.0f);
+                
+                mManBtn = new RadioButton(mContext);
+                mWomenBtn = new RadioButton(mContext);
+                mNoneBtn = new RadioButton(mContext);
+                
+//                mManBtn = new Button(mContext);
+//                mWomenBtn = new Button(mContext);
+//                mNoneBtn = new Button(mContext);
+                // mDateView.setTextColor(Color.DKGRAY);
+                mManBtn.setId(100);
+                mWomenBtn.setId(101);
+                mNoneBtn.setId(102);
+                mManBtn.setTextSize(16);
+                mWomenBtn.setTextSize(16);
+                mNoneBtn.setTextSize(16);
+                // mTimeView.setTextColor(Color.DKGRAY);
+                mManBtn.setGravity(Gravity.CENTER);
+                mWomenBtn.setGravity(Gravity.CENTER);
+                mNoneBtn.setGravity(Gravity.CENTER);
+                mManBtn.setText("男");
+                mWomenBtn.setText("女");
+                mNoneBtn.setText("不明");
+                mManBtn.setLayoutParams(new RadioGroup.LayoutParams(
+                        LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT,
+                        1.0f));
+                mWomenBtn.setLayoutParams(new RadioGroup.LayoutParams(
+                        LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT,
+                        1.0f));
+                mNoneBtn.setLayoutParams(new RadioGroup.LayoutParams(
+                        LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT,
+                        1.0f));
+//                mNoneBtn.setOnClickListener(new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View v) {
+//                        mNoneBtn.setBackgroundResource(R.drawable.ic_push_btn_default_sel);
+//                        mManBtn.setBackgroundResource(R.drawable.btn_selector);
+//                        mWomenBtn.setBackgroundResource(R.drawable.btn_selector);
+//                        mSexStr = mNoneBtn.getText().toString();
+//                    }
+//                });
+//                mWomenBtn.setOnClickListener(new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View v) {
+//                        mWomenBtn.setBackgroundResource(R.drawable.ic_push_btn_default_sel);
+//                        mManBtn.setBackgroundResource(R.drawable.btn_selector);
+//                        mNoneBtn.setBackgroundResource(R.drawable.btn_selector);
+//                        mSexStr = mWomenBtn.getText().toString();
+//                    }
+//                });
+//                mManBtn.setOnClickListener(new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View v) {
+//                        mManBtn.setBackgroundResource(R.drawable.ic_push_btn_default_sel);
+//                        mWomenBtn.setBackgroundResource(R.drawable.btn_selector);
+//                        mNoneBtn.setBackgroundResource(R.drawable.btn_selector);
+//                        mSexStr = mManBtn.getText().toString();
+//                    }
+//                });
+                radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                    
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        if(checkedId==mManBtn.getId()){
+                            mSexStr = "男";
+                        }else if(checkedId==mWomenBtn.getId()){
+                            mSexStr = "女";
+                       }else if(checkedId==mNoneBtn.getId()){
+                           mSexStr = "不明";
+                       }  
+                }}
+                );
+                radioGroup.addView(mManBtn);
+                radioGroup.addView(mWomenBtn);
+                radioGroup.addView(mNoneBtn);
+                if (type != null) {
+
+                    if (type.equals("add")) {
+                        radioGroup.check(mManBtn.getId());
+                    } else {
+                        String sex = mColumnValue[i];
+                        if(sex.equals("男")){
+                            radioGroup.check(mManBtn.getId());
+                        }else if(sex.equals("女")){
+                            radioGroup.check(mWomenBtn.getId());
+                        }else{
+                            radioGroup.check(mNoneBtn.getId());
+                        }
+
+                    }
+                }
+                mValueLayout
+                        .addView(radioGroup, LayoutParams.MATCH_PARENT, mDimenSize);
+            }
+                
+                
+                
+                else if (mColumnTitle[mChildIndex].contains("填表人")
                   ) {
                 final EditText mEditItem = new EditText(mContext);
                 mEditItem.setSingleLine(true);
@@ -209,15 +325,18 @@ public class InputContentActivity extends Activity implements
                       // 监听输入框输入多少个字符,如果超出显示范围,弹出全屏编辑框
                       @Override
                       public void afterTextChanged(Editable s) {
-                        
+                          Log.d("textchange", "afterTextChanged======" + s.toString());
                         if (!TextUtils.isEmpty(s.toString())) {
-                            if (!IdcardUtil.isIdcard(s.toString())) {
+                            if (IdcardUtil.isIdcard(s.toString())) {
+                                mErrorMessage = null;
+                            }else{
                                 mErrorMessage = "输入身份证号码不正确,请重新输入";
                             }
 
                         } else {
                             mErrorMessage = null;
                         }
+                        Log.w("textchange", "error======" + mErrorMessage);
                     }
                   });
                   if (type != null) {
@@ -252,9 +371,9 @@ public class InputContentActivity extends Activity implements
                         // 监听输入框输入多少个字符,如果超出显示范围,弹出全屏编辑框
                         @Override
                         public void afterTextChanged(Editable s) {
-                          
+                            Log.d("textchange", "afterTextChanged======" + s.toString());
                         if (!TextUtils.isEmpty(s.toString())) {
-                            Matcher matcher = mIdPattern.matcher(s.toString());
+                            Matcher matcher = mPhonePattern.matcher(s.toString());
                             if (!matcher.matches()) {
                                 mErrorMessage = "输入手机号码不正确,请重新输入";
                             } else {
@@ -263,6 +382,7 @@ public class InputContentActivity extends Activity implements
                         }else{
                             mErrorMessage=null;
                         }
+                        Log.w("textchange", "error======" + mErrorMessage);
                         }
                     });
                     
@@ -365,9 +485,15 @@ public class InputContentActivity extends Activity implements
         values.put(mColumnName[0], mTableName);
         for (int childIndex = 0; childIndex < mValueLayout.getChildCount(); childIndex++) {
             String item = "";
+
             if (mValueLayout.getChildAt(childIndex) instanceof LinearLayout) {
-                item = mDateView.getText().toString() + " "
-                        + mTimeView.getText().toString();
+                if (mColumnTitle[childIndex + 1].equals("日期")
+                        || mColumnTitle[childIndex + 1].equals("时间")) {
+                    item = mDateView.getText().toString() + " "
+                            + mTimeView.getText().toString();
+                } else if (mColumnTitle[childIndex + 1].equals("性别")) {
+                    item =  mSexStr;
+                }
             } else {
                 item = ((EditText) mValueLayout.getChildAt(childIndex))
                         .getText().toString();

@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.collection.data.CollectionProvider;
 import com.example.collection.data.DBHelper;
@@ -196,6 +197,10 @@ public class TablesActivity extends Activity {
         mTablist.add(customColumns);
         mTablist.add(new String[] { CommonUtil.CUSTOM_SET_LABEL });
         String[] tablesAndColumns = CommonUtil.getTablesInfo();
+        if(tablesAndColumns==null||tablesAndColumns.length<=0){
+            Toast.makeText(mContext, "配置文件不存在,请检查!",Toast.LENGTH_SHORT).show();
+            return;
+        }
         for (int i = 0; i < tablesAndColumns.length; i++) {
             String[] tableNameAndColumnName = tablesAndColumns[i].split("-");
             restoreColumnName(tableNameAndColumnName);

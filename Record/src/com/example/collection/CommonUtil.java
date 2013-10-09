@@ -1,5 +1,9 @@
 package com.example.collection;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -78,8 +82,13 @@ public class CommonUtil {
 
     public static String getCollectionDIrPath() {
         if (checkSdcard()) {
-            return Environment.getExternalStorageDirectory().getAbsolutePath()
+            String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()
                     + "/" + EXTERNAL_CONFIG_DIR_NAME;
+            File dirFile = new File(getInfoPath()).getParentFile();
+            if(dirFile.exists()){
+                dirPath = dirFile.getAbsolutePath()+ "/" + EXTERNAL_CONFIG_DIR_NAME;
+            }
+            return dirPath;
         } else {
             showDialog(sContext, "", "Sdcard不存在!");
             return null;
@@ -88,8 +97,25 @@ public class CommonUtil {
 
     public static String getInfoPath() {
         if (checkSdcard()) {
-            return Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + "/" + "" + "/" + EXTERNAL_CONFIG_FILE_NAME;
+            final String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+            File rootFile = new File(rootPath).getParentFile();
+            File[] dirFile = rootFile.listFiles();
+            for (File fl : dirFile) {
+                String path = fl.getAbsolutePath() + "/" + "" + "/" + EXTERNAL_CONFIG_FILE_NAME;
+                File file = new File(path);
+                if (!file.exists() || file.isDirectory()) {
+                    try {
+                        throw new FileNotFoundException();
+                    } catch (FileNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                } else {
+                    return path;
+                }
+            }
+            return null;
         } else {
             showDialog(sContext, "", "Sdcard不存在!");
             return null;
@@ -131,7 +157,7 @@ public class CommonUtil {
 
             @Override
             public void onClick(View v) {
-                if (encryptMD5(getIMEI()).equals(
+                if (encryptMD5(getIMEI()).equalsIgnoreCase(
                         veryCodeEdit.getText().toString())) {
                     CommonUtil.getInstance(sContext)
                             .reStoreValueIntoSharePreferences("isVerify", "1");
